@@ -2,6 +2,8 @@
 
 This is the backend server for the Wood Defect Detection system, built with Node.js and Express.
 
+Frontend server Repo: https://github.com/amiril84/wood-defect-detection-frontend
+
 ## Features
 
 - AI-powered wood defect detection using OpenAI's vision model
