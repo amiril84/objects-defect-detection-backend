@@ -73,7 +73,7 @@ async function analyzeImage(imagePath) {
           content: [
             {
               type: "text",
-              text: "Analyze these wood images to determine which ones are in good condition and which have defects, such as holes, scratches, discoloration, liquid stains, or any combination of these issues and provide the analysis in the following JSON format only: {\"defect\": \"yes/no\", \"explanation\": \"detail description of image including the defects if any\"}"
+              text: "Analyze these images with high level of detail. For each image:\n\nIdentify what the object is.\nDetermine if it is defective even if it is small or subtle imperfections or in good condition.\nProvide a brief explanation of its condition.\n\nUse the following format for your response:\n\n{\"object\": \"[Name of the object]\", \"defective\": \"[Yes/No]\", \"explanation\": \"[Brief description of the condition]\"}"
             },
             {
               type: "image_url",
@@ -88,11 +88,16 @@ async function analyzeImage(imagePath) {
     });
 
     const result = extractJSONFromMarkdown(response.choices[0].message.content);
-    return result;
+    return {
+      object: result.object || 'unknown',
+      defective: result.defective?.toLowerCase() || 'unknown',
+      explanation: result.explanation || 'No explanation provided'
+    };
   } catch (error) {
     console.error('Error analyzing image:', error);
     return {
-      defect: 'error',
+      object: 'unknown',
+      defective: 'error',
       explanation: `Analysis failed: ${error.message}`
     };
   }
@@ -114,12 +119,19 @@ app.post('/api/analyze', upload.array('files'), async (req, res) => {
         imageName: file.originalname,
         imagePath: file.filename,
         thumbnailPath: thumbnailName,
-        defect: analysis.defect,
-        explanation: analysis.explanation
+        analysis: {
+          object: analysis.object,
+          defective: analysis.defective,
+          explanation: analysis.explanation
+        }
       });
     }
 
-    res.json({ success: true, results });
+    res.json({ 
+      success: true, 
+      count: results.length,
+      results: results
+    });
   } catch (error) {
     console.error('Error processing files:', error);
     res.status(500).json({ error: 'Error processing files' });
