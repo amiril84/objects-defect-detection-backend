@@ -1,10 +1,12 @@
-# Wood Defect Detection - Backend
+# Modern Object Defect Detection - Backend
 
-This is the backend server for the Wood Defect Detection system, built with Node.js and Express.
+This is the backend server for the Object Defect Detection system, built with Node.js and Express. It uses AI to analyze images and detect defects in various objects.
 
 ## Features
 
-- AI-powered wood defect detection using OpenAI's vision model
+- AI-powered object analysis and defect detection using OpenAI's vision model
+- Automatic object identification
+- Defect detection and condition analysis
 - Image upload and processing
 - Automatic thumbnail generation
 - RESTful API endpoints
@@ -23,7 +25,7 @@ This is the backend server for the Wood Defect Detection system, built with Node
 1. Clone the repository:
 ```bash
 git clone [repository-url]
-cd wood-defect-detection-backend
+cd modern-object-defect-detection-backend
 ```
 
 2. Install dependencies:
@@ -47,7 +49,7 @@ The server will start on http://localhost:3001
 ## API Endpoints
 
 ### POST /api/analyze
-Analyzes uploaded images for wood defects.
+Analyzes uploaded images for object defects.
 
 Request:
 - Method: POST
@@ -63,8 +65,11 @@ Response:
       "imageName": "string",
       "imagePath": "string",
       "thumbnailPath": "string",
-      "defect": "yes/no",
-      "explanation": "string"
+      "analysis": {
+        "object": "string",
+        "defective": "yes/no",
+        "explanation": "string"
+      }
     }
   ]
 }
