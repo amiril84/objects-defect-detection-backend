@@ -2,7 +2,7 @@
 
 This is the backend server for the Object Defect Detection system, built with Node.js and Express. It uses AI to analyze images and detect defects in various objects.
 
-Frontend server Repo: https://github.com/amiril84/wood-defect-detection-frontend
+Frontend server Repo: https://github.com/amiril84/objects-defect-detection-frontend
 
 ## Features
 
